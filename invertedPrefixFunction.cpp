@@ -32,39 +32,40 @@ int main() {
 	string s;
 	s += 'a';
 	if (p[0] != 0) {
-		cout << "Impossible\n";
+		cout << "NO\n";
 		return 0;
 	}
 	for (int i = 1; i < n; ++i) {
 		if (p[i] > p[i - 1] + 1) {
-			cout << "Impossible\n";
+			cout << "NO\n";
 			return 0;
-		}
-		if (p[i] == 0) {
-			s += 'b';
-			continue;
 		}
 		int j = p[i - 1];
 		set<char> had;
-		while (j + 1 > p[i]) {
+		while (j > 0 && j + 1 > p[i]) {
 			had.insert(s[j]);
 			j = p[j - 1];
 		}
+		if (p[i] == 0) {
+			had.insert('a');
+			for (char c = 'a'; c <= 'z'; ++c) {
+				if (had.find(c) == had.end()) {
+					s += c;
+					break;
+				}
+			}
+			continue;
+		}
 		if (j + 1 != p[i]) {
-			cout << "Impossible\n";
+			cout << "NO\n";
 			return 0;
 		}
 		if (had.find(s[j]) != had.end()) {
-			cout << "Impossible\n";
+			cout << "NO\n";
 			return 0;
 		}
 		s += s[j];
 	}
+	cout << "YES\n";
 	cout << s << "\n";
 }
-
-
-
-
-
-
